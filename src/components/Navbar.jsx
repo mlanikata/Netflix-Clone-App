@@ -10,15 +10,24 @@ const Navbar = () => {
   
 const navRef = useRef();
 
-useEffect(()=>{
-  window.addEventListener('scroll', ()=>{
-    if(window.scrollY >= 80){
-      navRef.current.classList.add('nav-dark')
-    }else{
-      navRef.current.classList.remove('nav-dark')
-    }
-  })
-},[])
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY >= 80) {
+        navRef.current.classList.add('nav-dark');
+        navRef.current.classList.add('nav-visible');
+      } else {
+        navRef.current.classList.remove('nav-dark');
+        navRef.current.classList.remove('nav-visible');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup function to remove event listener
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <nav>
